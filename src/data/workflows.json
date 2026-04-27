@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1777319744991,
+    "name": "erterter",
+    "nodes": [
+      {
+        "id": "log-1777319720022-753",
+        "type": "log",
+        "data": {
+          "message": "this is the first log"
+        }
+      },
+      {
+        "id": "log-1777319720810-302",
+        "type": "log",
+        "data": {
+          "message": "this is the second log"
+        }
+      },
+      {
+        "id": "log-1777319721464-647",
+        "type": "log",
+        "data": {
+          "message": "this is the third log"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "log-1777319720022-753",
+        "target": "log-1777319720810-302"
+      },
+      {
+        "source": "log-1777319720810-302",
+        "target": "log-1777319721464-647"
+      }
+    ],
+    "createdAt": "2026-04-27T19:55:44.991Z"
+  }
+]
