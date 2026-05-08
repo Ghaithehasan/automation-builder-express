@@ -13,9 +13,39 @@ const saveWorkflowButton = document.getElementById("save-workflow");
 const workflowOutputElement = document.getElementById("workflow-output");
 const saveStatusElement = document.getElementById("save-status");
 const workspaceElement = document.getElementById("workspace");
+const chatMessagesElement = document.getElementById("chat-messages");
+const chatInputElement = document.getElementById("chat-input");
+const chatSendButton = document.getElementById("chat-send");
+const chatStatusElement = document.getElementById("chat-status");
 
 const workspaceNodes = [];
 const availableColors = ["red", "blue", "green", "orange", "purple"];
+
+const buildSessionId = () => {
+	if (typeof window !== "undefined" && window.crypto?.randomUUID) {
+		return window.crypto.randomUUID();
+	}
+
+	return `session-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+};
+
+const getChatSessionId = () => {
+	if (!window.localStorage) {
+		return buildSessionId();
+	}
+
+	const key = "flowforge_chat_session";
+	let sessionId = window.localStorage.getItem(key);
+
+	if (!sessionId) {
+		sessionId = buildSessionId();
+		window.localStorage.setItem(key, sessionId);
+	}
+
+	return sessionId;
+};
+
+const chatSessionId = getChatSessionId();
 
 const showSidebarMessage = (message, className = "info-text") => {
 	nodeTypesListElement.innerHTML = "";
@@ -297,6 +327,171 @@ const showSaveStatus = (message, className) => {
 	saveStatusElement.classList.add(className);
 };
 
+const setChatStatus = (message, tone = "") => {
+	if (!chatStatusElement) {
+		return;
+	}
+
+	chatStatusElement.textContent = message;
+	chatStatusElement.classList.remove("success", "error");
+	if (tone) {
+		chatStatusElement.classList.add(tone);
+	}
+};
+
+const appendChatMessage = (role, content) => {
+	if (!chatMessagesElement) {
+		return;
+	}
+
+	const placeholder = chatMessagesElement.querySelector(".chat-placeholder");
+	if (placeholder) {
+		placeholder.remove();
+	}
+
+	const messageElement = document.createElement("div");
+	messageElement.className = `chat-message ${role}`;
+	messageElement.textContent = content;
+
+	chatMessagesElement.appendChild(messageElement);
+	chatMessagesElement.scrollTop = chatMessagesElement.scrollHeight;
+};
+
+const buildWorkspacePayload = () => ({
+	name: workflowNameElement.value.trim(),
+	nodes: workspaceNodes.map((node) => ({
+		id: node.id,
+		type: node.type,
+		label: node.label,
+		data: {
+			message: node.data?.message || "",
+			...(node.type === "color" ? { color: node.data?.color || "" } : {})
+		}
+	})),
+	edges: buildSequentialEdges(workspaceNodes)
+});
+
+const applyWorkflowToWorkspace = (workflow) => {
+	const safeWorkflow = workflow || {};
+	workflowNameElement.value = safeWorkflow?.name || "";
+
+	const nodes = Array.isArray(safeWorkflow?.nodes) ? safeWorkflow.nodes : [];
+	const logNode = nodes.find((node) => node?.type === "log");
+	const colorNode = nodes.find((node) => node?.type === "color");
+
+	logMessageElement.value = logNode?.data?.message || "";
+	colorMessageElement.value = colorNode?.data?.message || "";
+	colorSelectElement.value = colorNode?.data?.color || "";
+
+	workspaceNodes.length = 0;
+	nodes.forEach((node) => {
+		const nodeId = node?.id || buildNodeId(node?.type || "node");
+		workspaceNodes.push({
+			id: nodeId,
+			type: node?.type || "log",
+			label: node?.label || getNodeLabel(node?.type || "log"),
+			data: {
+				message: node?.data?.message || "",
+				color: node?.data?.color || ""
+			}
+		});
+	});
+
+	renderWorkspace();
+};
+
+const handleToolResults = (toolResults) => {
+	if (!Array.isArray(toolResults) || toolResults.length === 0) {
+		return;
+	}
+
+	toolResults.forEach((result) => {
+		const payload = result?.payload;
+		const toolName = result?.toolName;
+
+		if (!payload) {
+			return;
+		}
+
+		if (toolName === "run_workflow") {
+			if (Array.isArray(payload.outputs)) {
+				showWorkflowOutputs(payload.outputs);
+			} else if (payload.success === false && payload.message) {
+				showWorkflowError(payload.message);
+			}
+			return;
+		}
+
+		if (toolName === "save_workflow") {
+			if (payload.message) {
+				showSaveStatus(payload.message, payload.success ? "save-success" : "save-error");
+			}
+			return;
+		}
+
+		if (toolName === "load_latest_workflow") {
+			if (payload.workflow) {
+				applyWorkflowToWorkspace(payload.workflow);
+			}
+			if (payload.success === false && payload.message) {
+				showSaveStatus(payload.message, "save-error");
+			}
+			return;
+		}
+
+		if (Array.isArray(payload.outputs)) {
+			showWorkflowOutputs(payload.outputs);
+		}
+	});
+};
+
+const sendChatMessage = async () => {
+	if (!chatInputElement || !chatSendButton) {
+		return;
+	}
+
+	const message = chatInputElement.value.trim();
+	if (!message) {
+		setChatStatus("Type a message before sending.", "error");
+		return;
+	}
+
+	appendChatMessage("user", message);
+	chatInputElement.value = "";
+	chatSendButton.disabled = true;
+	setChatStatus("Agent is thinking...");
+
+	try {
+		const response = await fetch("/api/agent/chat", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				sessionId: chatSessionId,
+				message,
+				workspace: buildWorkspacePayload()
+			})
+		});
+
+		const result = await response.json();
+
+		if (!response.ok || !result.success) {
+			throw new Error(result.message || "Agent request failed");
+		}
+
+		handleToolResults(result.toolResults);
+
+		const replyText = (result.reply || "").trim();
+		appendChatMessage("assistant", replyText || "No reply returned.");
+		setChatStatus("Reply received.", "success");
+	} catch (error) {
+		setChatStatus(error.message, "error");
+	} finally {
+		chatSendButton.disabled = false;
+	}
+};
+
 const showWorkflowOutputs = (outputs) => {
 	workflowOutputElement.innerHTML = "";
 	workflowOutputElement.classList.remove("output-success", "output-error");
@@ -477,43 +672,27 @@ const loadLatestWorkflow = async () => {
 		showSaveStatus("Loading latest workflow...", "save-success");
 
 		const response = await fetch("/api/workflows/latest");
+		// console.log("Load latest workflow response:", response);
 		const result = await response.json();
+		// console.log("Load latest workflow result:", result);
 
 		if (!response.ok || !result.success) {
 			throw new Error(result.message || "Failed to load latest workflow");
 		}
 
 		const workflow = result.workflow;
-
-		workflowNameElement.value = workflow?.name || "";
-
-		const nodes = Array.isArray(workflow?.nodes) ? workflow.nodes : [];
-		const logNode = nodes.find((node) => node?.type === "log");
-		const colorNode = nodes.find((node) => node?.type === "color");
-
-		logMessageElement.value = logNode?.data?.message || "";
-		colorMessageElement.value = colorNode?.data?.message || "";
-		colorSelectElement.value = colorNode?.data?.color || "";
-
-		workspaceNodes.length = 0;
-		nodes.forEach((node) => {
-			const nodeId = node?.id || buildNodeId(node?.type || "node");
-			workspaceNodes.push({
-				id: nodeId,
-				type: node?.type || "log",
-				label: node?.label || getNodeLabel(node?.type || "log"),
-				data: {
-					message: node?.data?.message || "",
-					color: node?.data?.color || ""
-				}
-			});
-		});
-
-		renderWorkspace();
+		applyWorkflowToWorkspace(workflow);
 
 		showSaveStatus("Latest workflow loaded successfully.", "save-success");
 	} catch (error) {
 		showSaveStatus(error.message, "save-error");
+	}
+};
+
+const handleChatKeydown = (event) => {
+	if (event.key === "Enter" && !event.shiftKey) {
+		event.preventDefault();
+		sendChatMessage();
 	}
 };
 
@@ -522,6 +701,14 @@ runColorNodeButton.addEventListener("click", runColorNode);
 loadLatestWorkflowButton.addEventListener("click", loadLatestWorkflow);
 runWorkflowButton.addEventListener("click", runWorkflow);
 saveWorkflowButton.addEventListener("click", saveWorkflow);
+
+if (chatSendButton) {
+	chatSendButton.addEventListener("click", sendChatMessage);
+}
+
+if (chatInputElement) {
+	chatInputElement.addEventListener("keydown", handleChatKeydown);
+}
 
 loadNodeTypes();
 renderWorkspace();

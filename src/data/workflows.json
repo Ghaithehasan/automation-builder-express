@@ -1,40 +1,44 @@
 [
   {
-    "id": 1777319744991,
-    "name": "erterter",
+    "id": 1778193973452,
+    "name": "Untitled Workflow",
     "nodes": [
       {
-        "id": "log-1777319720022-753",
+        "id": "log-1778193824528-103",
         "type": "log",
+        "label": "Log",
         "data": {
-          "message": "this is the first log"
+          "message": "سيسيس"
         }
       },
       {
-        "id": "log-1777319720810-302",
+        "id": "log-1778193826552-241",
         "type": "log",
+        "label": "Log",
         "data": {
-          "message": "this is the second log"
+          "message": "سشسشسشسشس"
         }
       },
       {
-        "id": "log-1777319721464-647",
-        "type": "log",
+        "id": "color-1778193830394-295",
+        "type": "color",
+        "label": "Color",
         "data": {
-          "message": "this is the third log"
+          "message": "ععععععععععععععععععععععععععععععععععععععععععععععععععععععععععع",
+          "color": "red"
         }
       }
     ],
     "edges": [
       {
-        "source": "log-1777319720022-753",
-        "target": "log-1777319720810-302"
+        "source": "log-1778193824528-103",
+        "target": "log-1778193826552-241"
       },
       {
-        "source": "log-1777319720810-302",
-        "target": "log-1777319721464-647"
+        "source": "log-1778193826552-241",
+        "target": "color-1778193830394-295"
       }
     ],
-    "createdAt": "2026-04-27T19:55:44.991Z"
+    "createdAt": "2026-05-07T22:46:13.452Z"
   }
 ]

@@ -1,0 +1,170 @@
+[
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "مرحبا",
+    "createdAt": "2026-05-08T00:02:26.744Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "I don't have a specific function to call in this case, as the prompt \"مرحبا\" is a greeting and doesn't match any of the available tools.",
+    "createdAt": "2026-05-08T00:02:26.744Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "اعمل لي وورك فلو عشوائي و قم بتشغيله",
+    "createdAt": "2026-05-08T00:03:14.376Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو، ولكن لم يتم إضافة أي عقد أو حواف إليه، لذلك لم يتم تنفيذه بنجاح.",
+    "createdAt": "2026-05-08T00:03:14.376Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "ولده و نفذه بنجاح",
+    "createdAt": "2026-05-08T00:03:45.131Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو، ولكن لم يتم إضافة أي عقد أو حواف إليه، لذلك لم يتم تنفيذه بنجاح.",
+    "createdAt": "2026-05-08T00:03:45.131Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "قم باضافة نود ثم نفذ",
+    "createdAt": "2026-05-08T00:04:03.505Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو، ولكن لم يتم إضافة أي عقد أو حواف إليه بشكل صحيح، لذلك لم يتم تنفيذه بنجاح.",
+    "createdAt": "2026-05-08T00:04:03.505Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "طيب نفذ الان",
+    "createdAt": "2026-05-08T00:04:25.801Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو بنجاح، وتم تنفيذ عقدة اللوغ بنجاح.",
+    "createdAt": "2026-05-08T00:04:25.801Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "طيب جبلي اخر وورك",
+    "createdAt": "2026-05-08T00:04:54.848Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تحميل الوورك فلو الأخير بنجاح.",
+    "createdAt": "2026-05-08T00:04:54.848Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "fdf",
+    "createdAt": "2026-05-08T00:10:18.731Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "I don't have a specific function to call in this case, as the prompt \"fdf\" is unclear and doesn't match any of the available tools.",
+    "createdAt": "2026-05-08T00:10:18.731Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "احتفظ",
+    "createdAt": "2026-05-08T00:23:31.384Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم حفظ الوورك فلو بنجاح.",
+    "createdAt": "2026-05-08T00:23:31.384Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "نفذ",
+    "createdAt": "2026-05-08T00:28:44.833Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو بنجاح، وتم تنفيذ عقدتي اللوغ بنجاح.",
+    "createdAt": "2026-05-08T00:28:44.833Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "قم",
+    "createdAt": "2026-05-08T00:29:19.214Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "I don't have a specific function to call in this case, as the prompt \"قم\" is unclear and doesn't match any of the available tools.",
+    "createdAt": "2026-05-08T00:29:19.214Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "افعل",
+    "createdAt": "2026-05-08T00:30:38.159Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "I don't have a specific function to call in this case, as the prompt \"افعل\" is unclear and doesn't match any of the available tools.",
+    "createdAt": "2026-05-08T00:30:38.159Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "افعل",
+    "createdAt": "2026-05-08T00:31:18.905Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو بنجاح، وتم تنفيذ عقدة اللون بنجاح.",
+    "createdAt": "2026-05-08T00:31:18.905Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "قم",
+    "createdAt": "2026-05-08T00:33:22.084Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو بنجاح، وتم تنفيذ عقدة اللون بنجاح.",
+    "createdAt": "2026-05-08T00:33:22.084Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "user",
+    "content": "افع",
+    "createdAt": "2026-05-08T00:35:15.082Z"
+  },
+  {
+    "sessionId": "4ad85163-3035-4240-9964-f974123a235b",
+    "role": "assistant",
+    "content": "تم تشغيل الوورك فلو بنجاح، وتم تنفيذ عقدة اللوغ بنجاح.",
+    "createdAt": "2026-05-08T00:35:15.082Z"
+  }
+]

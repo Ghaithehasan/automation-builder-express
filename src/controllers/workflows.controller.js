@@ -27,7 +27,16 @@ const writeWorkflows = async (workflows) => {
 
 export const saveWorkflow = async (req, res) => {
 	try {
+
+
 		const { name, nodes, edges } = req.body || {};
+
+		// return res.status(201).json({
+		// 	success: true,
+		// 	message: "Workflow saved successfully",
+		// 	data : name
+		// });
+		
 		const workflowName = typeof name === "string" ? name.trim() : "";
 
 		if (!workflowName) {
